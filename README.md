@@ -46,7 +46,7 @@ This project is ready to deploy on Vercel with the following considerations:
 - For Server-Sent Events (SSE) transport, add a Redis instance to your Vercel project and set `REDIS_URL` environment variable (optional and not even needed. I still don't know why it is needed)
 - Enable [Fluid compute](https://vercel.com/docs/functions/fluid-compute) for efficient execution
 - Set the `GEMINI_API_KEY` environment variable in your Vercel project settings
-- For Pro/Enterprise accounts, adjust `maxDuration` to 800 in the app configuration
+- For Pro/Enterprise accounts, adjust `maxDuration` to 800 in the app configuration. Yes this means you cannot run this MCP server on Vercel for free tier.
 
 ## Testing
 
