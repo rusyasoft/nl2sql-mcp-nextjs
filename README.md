@@ -1,25 +1,62 @@
-# Example Next.js MCP Server
+# Natural Language to SQL MCP Server
 
-**Uses `@vercel/mcp-adapter`**
+**Built with Next.js and `@vercel/mcp-adapter`**
 
+## Overview
 
-## Usage
+This project is a Model Context Protocol (MCP) server that provides natural language to SQL conversion capabilities using Google's Gemini AI. It allows users to write queries in plain English which get translated into SQL statements based on predefined database schemas.
 
-This sample app uses the [Vercel MCP Adapter](https://www.npmjs.com/package/@vercel/mcp-adapter) that allows you to drop in an MCP server on a group of routes in any Next.js project.
+## Features
 
-Update `app/[transport]/route.ts` with your tools, prompts, and resources following the [MCP TypeScript SDK documentation](https://github.com/modelcontextprotocol/typescript-sdk/tree/main?tab=readme-ov-file#server).
+- **Natural Language to SQL Conversion**: Converts plain English queries to SQL using Gemini AI
+- **Database Schema Awareness**: Includes schema definitions for employees, departments, and projects tables
+- **Additional Utility Tools**:
+  - Unit conversion (temperature, distance, weight)
+  - Date formatting
+  - Mathematical calculations
+  - Echo functionality for testing
 
-## Notes for running on Vercel
+## Setup
 
-- To use the SSE transport, requires a Redis attached to the project under `process.env.REDIS_URL`
-- Make sure you have [Fluid compute](https://vercel.com/docs/functions/fluid-compute) enabled for efficient execution
-- After enabling Fluid compute, open `app/route.ts` and adjust `maxDuration` to 800 if you using a Vercel Pro or Enterprise account
-- [Deploy the Next.js MCP template](https://vercel.com/templates/next.js/model-context-protocol-mcp-with-next-js)
+1. Clone this repository
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Create a `.env` file with your Gemini API key:
+   ```
+   GEMINI_API_KEY=your_api_key_here
+   ```
+4. Run the development server:
+   ```sh
+   npm run dev
+   ```
 
-## Sample Client
+## Database Schemas
 
-`script/test-client.mjs` contains a sample client to try invocations.
+The project includes predefined SQL schemas in the `app/schemas` directory for:
+- `employees`: Employee records with personal details, salary, and department information
+- `departments`: Department information including name, location, and budget
+- `projects`: Project details including status, budget, and timeline
+
+## Deployment Notes
+
+This project is ready to deploy on Vercel with the following considerations:
+
+- For Server-Sent Events (SSE) transport, add a Redis instance to your Vercel project and set `REDIS_URL` environment variable (optional and not even needed. I still don't know why it is needed)
+- Enable [Fluid compute](https://vercel.com/docs/functions/fluid-compute) for efficient execution
+- Set the `GEMINI_API_KEY` environment variable in your Vercel project settings
+- For Pro/Enterprise accounts, adjust `maxDuration` to 800 in the app configuration
+
+## Testing
+
+You can test the MCP server using the included client script:
 
 ```sh
-node scripts/test-client.mjs https://mcp-for-next-js.vercel.app
+node scripts/test-client.mjs https://your-deployed-url.vercel.app
 ```
+
+Example queries to try:
+- "Find all employees in the IT department earning over 70k"
+- "Show me the projects with budgets over 100k"
+- "List managers with the most direct reports"
