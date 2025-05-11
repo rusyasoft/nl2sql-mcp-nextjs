@@ -48,15 +48,34 @@ This project is ready to deploy on Vercel with the following considerations:
 - Set the `GEMINI_API_KEY` environment variable in your Vercel project settings
 - For Pro/Enterprise accounts, adjust `maxDuration` to 800 in the app configuration. Yes this means you cannot run this MCP server on Vercel for free tier.
 
-## Testing
+## Connect Claude Desktop to your MCP server
 
-You can test the MCP server using the included client script:
+You can connect to your MCP server from Claude Desktop by following [Anthropic's Quickstart](https://modelcontextprotocol.io/quickstart/user) and within Claude Desktop go to Settings > Developer > Edit Config.
 
-```sh
-node scripts/test-client.mjs https://your-deployed-url.vercel.app
+Update with this configuration (mcp_config.json):
+
+```json
+{
+  "mcpServers": {
+    "RustamMCP-Server": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "http://localhost:3000/mcp" 
+      ]
+    }
+  }
+}
 ```
 
+- Restart Claude and you should see the tools become available. (haven't tested yet)
+
+- Have tested with Windsurf AI and it works
+
+## Testing
+
 Example queries to try:
+
 - "Find all employees in the IT department earning over 70k"
 - "Show me the projects with budgets over 100k"
 - "List managers with the most direct reports"
